@@ -1,0 +1,24 @@
+{
+    "name": "andy/platform-wechat",
+    "description": "微信第三方开放平台api",
+    "type": "library",
+    "keywords": ["wechat", "platform"],
+    "require": {
+        "php": "php>=7.2",
+        "overtrue/wechat": "~4.0"
+    },
+    "authors": [
+        {
+            "name": "andy",
+            "email": "1605882811@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "andy\\platform\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "license": "MIT"
+}
+
