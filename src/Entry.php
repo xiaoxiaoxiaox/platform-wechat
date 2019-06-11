@@ -24,9 +24,25 @@ namespace andy\platform;
 
 class Entry
 {
-    protected $type = 'wechat';
+    /**
+     * 第三方平台对象
+     * @var null
+     */
+    public $platform = null;
 
-    public function __construct($type = 'wechat')
+    /**
+     * 第三方平台从属对象
+     * @var null
+     */
+    protected $subordinate = null;
+
+    /**
+     * 第三方平台从属对象类型
+     * @var string
+     */
+    protected $type = 1;
+
+    public function __construct(array $config,string $type = 'wechat')
     {
     }
 
