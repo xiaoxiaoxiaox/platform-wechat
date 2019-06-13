@@ -3,7 +3,7 @@
  * Url: http://xxcok.com
  * Author: Andy
  * Date: 0010 6-10
- * Time: 20:04
+ * Time: 20:02
  *
  *  .--,       .--,
  * ( (  \.---./  ) )
@@ -23,11 +23,11 @@
 namespace andy\platform\wechat;
 
 /**
- * 微信开放平台
- * Class Open
+ * 微信公众平台
+ * Class People
  * @package andy\platform\wechat
  */
-class Open
+class OfficialAccount
 {
 
 }

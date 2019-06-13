@@ -2,8 +2,8 @@
 /**
  * Url: http://xxcok.com
  * Author: Andy
- * Date: 0011 6-11
- * Time: 21:03
+ * Date: 0010 6-10
+ * Time: 20:04
  *
  *  .--,       .--,
  * ( (  \.---./  ) )
@@ -20,8 +20,14 @@
  * -----------------------------------------------------
  */
 
-namespace andy\platform;
+namespace andy\platform\wechat;
 
-class CreateException extends \Exception
+/**
+ * 微信开放平台
+ * Class Open
+ * @package andy\platform\wechat
+ */
+class OpenPlatform
 {
+
 }
