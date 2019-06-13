@@ -16,7 +16,10 @@
     "autoload": {
         "psr-4": {
             "andy\\platform\\": "src/"
-        }
+        },
+        "files": [
+            "src/helper.php"
+        ]
     },
     "minimum-stability": "dev",
     "license": "MIT"
