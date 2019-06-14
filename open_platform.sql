@@ -1,20 +1,4 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : 生产
-Source Server Version : 50718
-Source Host           : rm-wz9pa71pjrbik6hyqxo.mysql.rds.aliyuncs.com:3306
-Source Database       : open_platform
-
-Target Server Type    : MYSQL
-Target Server Version : 50718
-File Encoding         : 65001
-
-Date: 2019-06-13 19:04:30
-*/
-
 SET FOREIGN_KEY_CHECKS=0;
-
 -- ----------------------------
 -- Table structure for wx_auth_callback
 -- ----------------------------
@@ -22,8 +6,10 @@ DROP TABLE IF EXISTS `wx_auth_callback`;
 CREATE TABLE `wx_auth_callback` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `data` text COMMENT '回调返回信息',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '微信服务器消息回调通知';
 
 -- ----------------------------
 -- Table structure for wx_auth_info
@@ -37,16 +23,14 @@ CREATE TABLE `wx_auth_info` (
   `expires_in` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'access_token 的生命周期（秒）',
   `func_info` text COMMENT '权限集合',
   `is_auth` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否授权',
-  `site_id` char(20) NOT NULL DEFAULT '' COMMENT '企业大全里的站点 ID',
-  `is_partner` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否为分销',
-  `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
   `app_version` varchar(20) NOT NULL DEFAULT '0' COMMENT '小程序版本',
   `submit_id` int(11) DEFAULT '0' COMMENT '最新提交的审核id',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `authorizer_appid` (`authorizer_appid`) USING BTREE,
-  KEY `site_id` (`site_id`) USING BTREE,
-  KEY `is_partner` (`is_partner`)
-) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  KEY `site_id` (`site_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for wx_auto_log
@@ -59,9 +43,10 @@ CREATE TABLE `wx_auto_log` (
   `site_id` varchar(255) NOT NULL COMMENT '0',
   `code` int(10) NOT NULL DEFAULT '0' COMMENT '运行状态码200 成功',
   `msg` varchar(255) NOT NULL DEFAULT '' COMMENT '运行消息',
-  `create_time` int(11) NOT NULL COMMENT '0',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2846 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for wx_code_draft
@@ -69,15 +54,16 @@ CREATE TABLE `wx_auto_log` (
 DROP TABLE IF EXISTS `wx_code_draft`;
 CREATE TABLE `wx_code_draft` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_version` varchar(25) NOT NULL DEFAULT '1.0.0' COMMENT '模板版本号',
-  `user_desc` varchar(100) NOT NULL DEFAULT '初始化' COMMENT '模板描述',
+  `version` varchar(25) NOT NULL DEFAULT '1.0.0' COMMENT '模板版本号',
+  `desc` varchar(100) NOT NULL DEFAULT '初始化' COMMENT '模板描述',
   `draft_id` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '草稿 ID',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '草稿上传时间',
   `is_new` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否为最新',
-  `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `draft_id` (`draft_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='代码草稿，会多次保存，取最新一次';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8  COMMENT='代码草稿，会多次保存，取最新一次';
 
 -- ----------------------------
 -- Table structure for wx_code_submit_info
@@ -95,13 +81,13 @@ CREATE TABLE `wx_code_submit_info` (
   `is_task` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否加入队列 0 否 1是',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '9' COMMENT '审核状态, 0 为审核通过，1为审核不通过，2 为审核中',
   `reasons` varchar(500) NOT NULL DEFAULT '' COMMENT '审核不通过的原因',
-  `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '发送到微信审核的时间',
-  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '查询审核的时间',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `auditid` (`auditid`) USING BTREE,
   KEY `status` (`status`) USING BTREE,
   KEY `authorizer_appid` (`authorizer_appid`)
-) ENGINE=InnoDB AUTO_INCREMENT=18825 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for wx_code_template
@@ -116,10 +102,11 @@ CREATE TABLE `wx_code_template` (
   `app_json` text COMMENT '小程序配置',
   `ext_json` text COMMENT '额外参数配置',
   `ext_page_json` text COMMENT '页面参数配置',
-  `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `template_id` (`template_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='代码模板';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代码模板';
 
 -- ----------------------------
 -- Table structure for wx_log
@@ -130,11 +117,12 @@ CREATE TABLE `wx_log` (
   `appid` varchar(50) NOT NULL COMMENT '小程序 appid',
   `name` varchar(200) NOT NULL DEFAULT '' COMMENT '记录名称',
   `data` text COMMENT '具体信息',
-  `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `appid` (`appid`)
-) ENGINE=InnoDB AUTO_INCREMENT=22816 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for wx_miniprogram_info
@@ -155,8 +143,8 @@ CREATE TABLE `wx_miniprogram_info` (
   `authorizer_appid` varchar(50) DEFAULT NULL COMMENT '授权方appid',
   `is_miniprogram` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否为小程序授权',
   `miniprogram_info` text COMMENT '小程序信息',
-  `add_time` int(10) unsigned NOT NULL COMMENT '添加时间',
-  `update_time` int(10) unsigned NOT NULL COMMENT '更新授权时间',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `remark` text COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `nick_name` (`nick_name`) USING BTREE,
@@ -164,23 +152,4 @@ CREATE TABLE `wx_miniprogram_info` (
   KEY `is_miniprogram` (`is_miniprogram`) USING BTREE,
   KEY `add_time` (`add_time`) USING BTREE,
   KEY `authorizer_appid` (`authorizer_appid`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- ----------------------------
--- Table structure for wx_parameter_log
--- ----------------------------
-DROP TABLE IF EXISTS `wx_parameter_log`;
-CREATE TABLE `wx_parameter_log` (
-  `log_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `service` varchar(50) NOT NULL COMMENT '服务项目',
-  `index` varchar(50) NOT NULL DEFAULT '' COMMENT '索引',
-  `brew` text NOT NULL COMMENT '全部数据',
-  `add_time` int(11) unsigned NOT NULL COMMENT '添加时间',
-  `url` varchar(200) NOT NULL DEFAULT '' COMMENT '访问url',
-  `referer` varchar(200) NOT NULL DEFAULT '' COMMENT '来源',
-  `ip` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`log_id`),
-  KEY `index` (`index`),
-  KEY `service` (`service`),
-  KEY `add_time` (`add_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=83431 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
